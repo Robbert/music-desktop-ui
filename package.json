@@ -7,12 +7,19 @@
   "main": "main.js",
   "scripts": {
     "build": "mkdir -p dist/img/; node build-icon.js",
-    "start": "electron ."
+    "start": "electron .",
+    "roon": "electron roon.js"
   },
   "devDependencies": {
     "fontkit": "^1.7.6"
   },
   "dependencies": {
-    "electron": "^1.6.11"
+    "electron": "^1.6.11",
+    "lodash": "^4.17.4",
+    "node-roon-api": "github:roonlabs/node-roon-api",
+    "node-roon-api-browse": "github:roonlabs/node-roon-api-browse",
+    "node-roon-api-image": "github:roonlabs/node-roon-api-image",
+    "node-roon-api-status": "github:roonlabs/node-roon-api-status",
+    "node-roon-api-transport": "github:roonlabs/node-roon-api-transport"
   }
 }
