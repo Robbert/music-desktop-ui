@@ -13,13 +13,13 @@ const unregisterAction = (actionName, fn) => {
         actions[fn] = null;
 };
 
-const triggerAction = (actionName) => {
+const triggerAction = (actionName, args) => {
     console.log('Trigger action: ' + actionName);
     if (typeof actions[actionName] == 'function')
-        actions[actionName].apply(null, arguments);
+        actions[actionName](args);
 };
 
-const performAction = actionName => () => triggerAction(actionName);
+const performAction = (actionName, args) => () => triggerAction(actionName, args);
 
 // I think it is necessary to put `tray` in the global scope,
 // to prevent it from being garbage collected and destroyed.
@@ -69,9 +69,9 @@ const initSystemTray = () => {
         {
             label: 'Choose device',
             submenu: [
-                { label: 'Amplifier', type: 'radio' },
-                { label: 'Headphones', type: 'radio' },
-                { label: 'This Mac', type: 'radio', checked: true }
+                { label: 'Amplifier', type: 'radio', click: performAction('select-zone', { name: 'Amplifier' }) },
+                { label: 'Headphones', type: 'radio', click: performAction('select-zone', { name: 'Headphones'}) },
+                { label: 'Mac Mini', type: 'radio', checked: true, click: performAction('select-zone', { name: 'Mac Mini' }) }
             ]
         }
     ]);

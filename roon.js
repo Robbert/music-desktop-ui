@@ -24,8 +24,27 @@ const init = () => {
             const play = () => core.services.RoonApiTransport.control(currentZoneId, 'play');
             const pause = () => core.services.RoonApiTransport.control(currentZoneId, 'pause');
 
+            const setZone = (zone) => {
+                currentZoneId = zone ? zone.zone_id : null;
+                currentZone = zone ? zone : null;
+
+                console.log('Current zone: ', currentZone && currentZone.display_name);
+            };
+
             musicController.registerAction('play', play);
             musicController.registerAction('pause', pause);
+
+            musicController.registerAction('select-zone', (args) => {
+                console.log('select zone: ', args);
+
+                let matches = _.filter(zones, zone => zone.display_name && zone.display_name.includes(args.name));
+
+                if (matches[0])
+                {
+                    setZone(matches[0]);
+                }
+            });
+
 
             let zones = {};
             core.services.RoonApiTransport.subscribe_zones((response, msg) => {
@@ -39,13 +58,9 @@ const init = () => {
                     if (msg.zones_changed) msg.zones_changed.forEach(e => zones[e.zone_id] = e);
                 }
 
-                _.forEach(zones, zone => {
-                    const matchesZone = /Amplifier/.test(zone.display_name);
-                    currentZoneId = matchesZone ? zone.zone_id : currentZoneId;
-                    currentZone = matchesZone ? zone : currentZone;
-                });
-
-                console.log('Current zone: ', currentZone && currentZone.display_name);
+                // Use the first zone as default
+                if (!currentZone)
+                    setZone(zones[0]);
             });
         },
         core_unpaired: () => null
