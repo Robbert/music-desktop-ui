@@ -5,7 +5,7 @@
   "author": "Robbert Broersma",
   "private": true,
   "scripts": {
-    "build": "node build-icon.js"
+    "build": "mkdir -p dist/img/; node build-icon.js",
   },
   "devDependencies": {
     "fontkit": "^1.7.6"
