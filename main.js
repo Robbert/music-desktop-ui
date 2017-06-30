@@ -2,37 +2,66 @@ const { app, Menu, Tray } = require('electron')
 
 const trayIconPath = 'dist/img/icon.png';
 
-app.on('ready', () => {
-    const appIcon = new Tray(trayIconPath)
+const actions = {};
+
+const registerAction = (actionName, fn) => {
+    actions[actionName] = fn;
+};
+
+const unregisterAction = (actionName, fn) => {
+    if (actions[fn] === fn)
+        actions[fn] = null;
+};
+
+const triggerAction = (actionName) => {
+    console.log('Trigger action: ' + actionName);
+    if (typeof actions[actionName] == 'function')
+        actions[actionName].apply(null, arguments);
+};
+
+const performAction = actionName => () => triggerAction(actionName);
+
+// I think it is necessary to put `tray` in the global scope,
+// to prevent it from being garbage collected and destroyed.
+let tray;
+
+const initSystemTray = () => {
+    tray = new Tray(trayIconPath);
     const contextMenu = Menu.buildFromTemplate([
         {
-            label: 'Play anything'
+            label: 'Play anything',
+            click: performAction('play')
         },
         {
             type: 'separator'
         },
         {
             label: 'Pause',
-            disabled: true
+            disabled: true,
+            click: performAction('pause')
         },
         {
             label: 'Pause after this',
-            disabled: true
+            disabled: true,
+            click: performAction('schedule-break')
         },
         {
             label: 'Skip this track',
-            disabled: true
+            disabled: true,
+            click: performAction('next')
         },
         {
             type: 'separator'
         },
         {
             label: 'Ban this track',
-            disabled: true
+            disabled: true,
+            click: performAction('ban')
         },
         {
             label: 'Like this track',
-            disabled: true
+            disabled: true,
+            click: performAction('like')
         },
         {
             type: 'separator'
@@ -47,5 +76,15 @@ app.on('ready', () => {
         }
     ]);
 
-    appIcon.setContextMenu(contextMenu)
+    tray.setContextMenu(contextMenu);
+};
+
+app.on('ready', () => {
+    initSystemTray();
+
+    triggerAction('init');
 });
+
+module.exports = {
+    registerAction
+};
