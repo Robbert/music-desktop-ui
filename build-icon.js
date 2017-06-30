@@ -5,6 +5,6 @@ const font = fontkit.openSync('/System/Library/Fonts/Apple Color Emoji.ttc').fon
 const outputPath = 'img/icon.png';
 
 let run = font.layout('🎵');
-let glyph = run.glyphs[0].getImageForSize(128)
+let glyph = run.glyphs[0].getImageForSize(10)
 
 fs.writeFile(outputPath, glyph.data);
