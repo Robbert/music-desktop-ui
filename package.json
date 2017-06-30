@@ -1,0 +1,15 @@
+{
+  "name": "index_music",
+  "version": "0.0.1",
+  "description": "Control a music player from your Mac desktop",
+  "author": "Robbert Broersma",
+  "private": true,
+  "scripts": {
+    "build": "node build-icon.js"
+  },
+  "devDependencies": {
+    "fontkit": "^1.7.6"
+  },
+  "dependencies": {
+  }
+}
