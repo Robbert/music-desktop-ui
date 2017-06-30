@@ -4,12 +4,15 @@
   "description": "Control a music player from your Mac desktop",
   "author": "Robbert Broersma",
   "private": true,
+  "main": "main.js",
   "scripts": {
     "build": "mkdir -p dist/img/; node build-icon.js",
+    "start": "electron ."
   },
   "devDependencies": {
     "fontkit": "^1.7.6"
   },
   "dependencies": {
+    "electron": "^1.6.11"
   }
 }
