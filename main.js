@@ -1,6 +1,7 @@
 const { app, Menu, Tray } = require('electron')
+const path = require('path');
 
-const trayIconPath = 'dist/img/icon.png';
+const trayIconPath = path.resolve(__dirname, 'img/generated/16x16.png');
 
 const actions = {};
 
