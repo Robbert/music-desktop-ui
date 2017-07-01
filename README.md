@@ -1,7 +1,15 @@
 ## Getting started
 
 ```sh
-npm install
-npm run build
-npm start
+yarn install
+yarn build
+yarn start
+```
+
+Build and start the application for OS X using:
+
+```
+yarn build
+yarn dist
+open dist/mac/Yokoyo.app
 ```

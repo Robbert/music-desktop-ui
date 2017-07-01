@@ -8,11 +8,25 @@
   "scripts": {
     "clean": "rm -rf dist/* build/* tmp/*",
     "build": "mkdir -p tmp/ build/ img/generated/; node build-icon.js; electron-icon-maker --input=tmp/icon.png --output=tmp/; mv tmp/icons/png/16x16.png img/generated/; mv tmp/icons/mac/icon.icns build/",
-    "start": "electron ."
+    "start": "electron .",
+    "dist": "electron-builder"
   },
   "devDependencies": {
+    "7zip-bin-mac": "^1.0.1",
     "electron": "^1.6.11",
+    "electron-builder": "^19.11.1",
     "electron-icon-maker": "^0.0.3",
     "fontkit": "^1.7.6"
+  },
+  "build": {
+    "appId": "com.github.robbert.music-desktop-ui",
+    "productName": "Yokoyo",
+    "compression": "store",
+    "mac": {
+      "category": "public.app-category.music"
+    },
+    "files": [
+      "!tmp${/*}"
+    ]
   }
 }
